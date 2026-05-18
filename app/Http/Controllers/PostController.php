@@ -13,7 +13,7 @@ class PostController extends Controller
     {
         // Url: GET /posts
         $posts=Post::all();
-        return view('post.index',compact('posts'));
+        return view('posts.showAllPosts',compact('posts'));
 
 
     }
@@ -24,7 +24,7 @@ class PostController extends Controller
     public function create()
     {
         // Url: GET /posts/create
-        return view('post.create');
+        return view('posts.createNewPost');
     }
 
     /**
@@ -38,7 +38,7 @@ class PostController extends Controller
             'content'=>'required|string|min:30'
         ]);
         Post::create($validate);
-        return redirect()->route('post.create')->with('success','Added Post Successfully');
+        return redirect()->route('posts.index')->with('success','Added Post Successfully');
     }
 
     /**
@@ -47,7 +47,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // Url: GET /posts/{id}
-        return view('post.show',compact('post'));
+        return view('posts.showOnePost',compact('post'));
 
     }
 
@@ -57,7 +57,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         // Url: GET /posts/{id}/edit
-        return view ('post.edit',compact('post'));
+        return view ('posts.editOnePost',compact('post'));
 
     }
 
@@ -72,7 +72,7 @@ class PostController extends Controller
             'content'=>'required|string|min:30'
         ]);
         $post->update($validate);
-        return redirect()->route('post.create')->with('success','Post Updated Successfully');
+        return redirect()->route('posts.index')->with('success','Post Updated Successfully');
         
     }
 
@@ -83,7 +83,7 @@ class PostController extends Controller
     {
         // Url: DELETE /posts/{id}
         $post->delete();
-        return redirect()->route('post.index')->with('success','Post deleted successfully');
+        return redirect()->route('posts.index')->with('success','Post deleted successfully');
 
     }
 }

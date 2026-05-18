@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Post extends Model
 {
     protected $fillable=[
-        'title','content','user_id'
+        'title','content',''
     ];
     public function user():BelongsTo{
-        return $this->belongsTo(User::class,'user_id' );
+        return $this->belongsTo(User::class,'' );
     }
     public function comment(){
         // return $this->hasMany(Comment::class,'post_id');
