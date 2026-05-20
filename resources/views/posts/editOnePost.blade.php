@@ -20,6 +20,7 @@
     <button type="submit">Update Post</button>
 
 </form>
+    <a href="{{ route('posts.index') }}">Back</a>
 
 @if($errors->any())
 
