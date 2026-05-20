@@ -38,7 +38,8 @@ class PostController extends Controller
             'content'=>'required|string|min:30'
         ]);
         Post::create($validate);
-        return redirect()->route('posts.index')->with('success','Added Post Successfully');
+        return redirect()->route('posts.index')->with('success','Added Post Successfully'); //Redirect user and carry
+                                                                            // this message to next page by using session
     }
 
     /**
