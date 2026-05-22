@@ -12,7 +12,7 @@ class Post extends Model
     public function user():BelongsTo{
         return $this->belongsTo(User::class,'' );
     }
-    public function comment(){
-        // return $this->hasMany(Comment::class,'post_id');
+    public function comments(){
+        return $this->hasMany(Comment::class,'');
     }
 }
