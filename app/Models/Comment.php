@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
-    protected $fillable=['body'];
+    public $timestamps=false;
+    protected $fillable=['comment'];
     public function post():BelongsTo{
         return $this->belongsTo(Post::class);
 

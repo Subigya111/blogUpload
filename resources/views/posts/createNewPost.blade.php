@@ -12,10 +12,14 @@
 
     <br><br>
 
-    <button type="submit">Save Post</button>
+    <button type="submit" name="submit">Save Post</button>
 
 </form>
+@if(isset($POST['submit'])){
+@include('stuffs.comment')
 
+}
+@endif
 @if($errors->any())
 
     @foreach($errors->all() as $error)
