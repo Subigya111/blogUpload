@@ -35,8 +35,11 @@ class PostController extends Controller
         // Url: POST /posts
         $validate=$request->validate([
             'title'=>'required|string|max:255',
-            'content'=>'required|string|min:30'
+            'content'=>'required|string|min:30',
         ]);
+        $validate['user_id'] = auth()->id();
+ 
+
         Post::create($validate);
         return redirect()->route('posts.index')->with('success','Added Post Successfully'); //Redirect user and carry
                                                                             // this message to next page by using session
@@ -48,7 +51,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // Url: GET /posts/{id}
-        return view('posts.showOnePost',compact('post'));
+        return view('posts.showOnePost',compact('post')); //compact() makes an array 
 
     }
 

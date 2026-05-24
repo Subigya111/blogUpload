@@ -12,8 +12,7 @@ class CommentController extends Controller
       Comment::create([
         'comment'=>$validated['comment']
       ]);
-      $comments=Comment::all();
-      compact($comments);
+   ;
       return redirect()->route('posts.index')->with('success','Comment Added');
     }
 }
