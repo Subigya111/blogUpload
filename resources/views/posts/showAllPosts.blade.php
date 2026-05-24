@@ -22,6 +22,7 @@
 
         <button type="submit">Delete</button>
     </form>
+    @include('auth.logout');
 
     <hr>
 

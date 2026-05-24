@@ -15,6 +15,7 @@
     <button type="submit" name="submit">Save Post</button>
 
 </form>
+@include('auth.logout')
 @if(isset($POST['submit'])){
 @include('stuffs.comment')
 

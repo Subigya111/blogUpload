@@ -35,11 +35,11 @@ class AuthController extends Controller
         $request->session()->regenerate(); //generates a new session after login preventing session fixation
         return redirect()->route('posts.create')->with('success','Logged in');
     }
-    public function authLogout(Request $request){
+    public function logout(Request $request){
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('auth.login')->with(['success'=>'Logged out successfully']);
+        return redirect()->route('loginForm')->with(['success'=>'Logged out successfully']);
     }
 }
 
