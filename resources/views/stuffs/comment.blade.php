@@ -4,7 +4,7 @@
     <p>{{ session('success') }}</p>
 @endif
 
-<form action="{{ route('comments.store') }}" method="POST">
+<form action="{{ route('comments.store',$post) }}" method="POST">
 
     @csrf
 
@@ -19,6 +19,35 @@
     </button>
 
 </form>
+<h3>Comments</h3>
+
+@foreach($comments as $comment)
+
+    <p>
+        <strong>{{ $comment->user->name }}:</strong>
+        {{ $comment->comment }}
+    </p>
+    @if(auth()->id() == $comment->user_id)
+
+        <a href="{{ route('comments.edit', $comment) }}">
+            Edit
+        </a>
+
+        <form action="{{ route('comments.delete', $comment) }}" method="POST">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit">
+                Delete
+            </button>
+        </form>
+
+    @endif
+
+    <hr>
+
+@endforeach
+
 
 @if($errors->any())
 

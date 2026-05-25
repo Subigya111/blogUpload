@@ -26,14 +26,12 @@ class AuthController extends Controller
         return redirect()->route('loginForm')->with('success','User Registered');
     }
     public function login(LoginRequest $request){
-        $validated = $request->validated();
-        $user = User::where('email',$validated['email'])->first();
-        if (!$user ||!Hash::check($validated['password'],$user->password)) {
-            return redirect()->route('loginForm')->with('error','Invalid credentials');
-            }
-        Auth::attempt($validated);
-        $request->session()->regenerate(); //generates a new session after login preventing session fixation
-        return redirect()->route('posts.create')->with('success','Logged in');
+    $validated = $request->validated();
+    if (!Auth::attempt($validated)) {  //finds user by email,checks hashed password,logs user in,sets session
+    return back()->with('error', 'Invalid credentials');
+}
+    $request->session()->regenerate();
+    return redirect()->route('posts.index')->with('success', 'Logged in');
     }
     public function logout(Request $request){
         Auth::logout();

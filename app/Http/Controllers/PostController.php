@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
@@ -51,7 +52,9 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // Url: GET /posts/{id}
-        return view('posts.showOnePost',compact('post')); //compact() makes an array 
+        $comments = Comment::with('user')
+        ->where('post_id', $post->id)->get();
+        return view('posts.showOnePost',compact('post','comments')); //compact() makes an array 
 
     }
 
