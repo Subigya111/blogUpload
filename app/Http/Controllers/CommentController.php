@@ -19,11 +19,16 @@ class CommentController extends Controller
    
       return redirect()->route('posts.index')->with('success','Comment Added');
     }
+
     public function editComment(Comment $comment){
+        if (auth()->id() !== $comment->user_id) {  //checking if the comment belongs to logged in user
+        abort(403);
+    }
+
       return view('stuffs.editComment',compact('comment'));
     }
     public function updateComment(Request $request, Comment $comment){
-    if (auth()->id() !== $comment->user_id) {
+    if (auth()->id() !== $comment->user_id) {  //checking if the comment belongs to logged in user
         abort(403);
     }
 
@@ -33,7 +38,7 @@ class CommentController extends Controller
 
     $comment->update($validated);
 
-    return 'comment updated';
+    return redirect()->route('posts.show',$comment->post_id);
 }
 public function deleteComment(Comment $comment)
 {

@@ -52,15 +52,18 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // Url: GET /posts/{id}
-        $comments = Comment::with('user')
-        ->where('post_id', $post->id)->get();
-        return view('posts.showOnePost',compact('post','comments')); //compact() makes an array 
+        $comments = Comment::with('user')->where('post_id', $post->id)->get(); //stores comment of a particular post 
+                                                                            //with username
+        $userComment = Comment::where('post_id', $post->id)->where('user_id', auth()->id())->first(); //stores comment of 
+                                                                                        // logged in user
+                                                                                        
+        return view('posts.showOnePost',compact('post','comments','userComment')); //compact() makes an array 
 
     }
 
     /**
      * show the form for editing the specified post.
-     */
+     */ 
     public function edit(Post $post)
     {
         // Url: GET /posts/{id}/edit

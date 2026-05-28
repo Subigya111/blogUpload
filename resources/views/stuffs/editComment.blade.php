@@ -5,14 +5,12 @@
     @csrf
     @method('PUT')
 
-    <textarea name="comment">
-        {{ $comment->comment }}
-    </textarea>
+    <textarea name="comment">{{ $comment->comment }}</textarea>
 
     <br><br>
 
     <button type="submit">
-        Update Comment
+        Update 
     </button>
 
 </form>

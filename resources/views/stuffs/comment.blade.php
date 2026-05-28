@@ -1,8 +1,9 @@
-<h1>Add Comment</h1>
 
 @if(session('success'))
     <p>{{ session('success') }}</p>
 @endif
+@if(!$userComment)
+<h1>Add Comment</h1>
 
 <form action="{{ route('comments.store',$post) }}" method="POST">
 
@@ -19,6 +20,11 @@
     </button>
 
 </form>
+@else
+
+    <p>You already commented on this post.</p>
+
+@endif
 <h3>Comments</h3>
 
 @foreach($comments as $comment)
@@ -27,9 +33,11 @@
         <strong>{{ $comment->user->name }}:</strong>
         {{ $comment->comment }}
     </p>
-    @if(auth()->id() == $comment->user_id)
+    {{-- only current logged in user can edit or delete their own comment--}}
+    @if(auth()->id() == $comment->user_id) 
 
-        <a href="{{ route('comments.edit', $comment) }}">
+        <a href="{{ route('comments.edit', $comment) }}"> 
+
             Edit
         </a>
 
