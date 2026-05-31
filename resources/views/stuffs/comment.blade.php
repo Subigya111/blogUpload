@@ -1,66 +1,107 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-@if(session('success'))
-    <p>{{ session('success') }}</p>
-@endif
-@if(!$userComment)
-<h1>Add Comment</h1>
+<div class="mt-4">
 
-<form action="{{ route('comments.store',$post) }}" method="POST">
+    <!-- Success Message -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    @csrf
+    <!-- Add Comment -->
+    @if(!$userComment)
 
-    <textarea
-        name="comment"
-        placeholder="Write your comment..."></textarea>
+        <div class="card mb-4 shadow-sm">
 
-    <br><br>
+            <div class="card-body">
 
-    <button type="submit">
-         Comment
-    </button>
+                <h5 class="mb-3">Add Comment</h5>
 
-</form>
-@else
+                <form action="{{ route('comments.store', $post) }}" method="POST">
+                    @csrf
 
-    <p>You already commented on this post.</p>
+                    <textarea name="comment" class="form-control mb-3"
+                        placeholder="Write your comment..."></textarea>
 
-@endif
-<h3>Comments</h3>
+                    <button type="submit" class="btn btn-primary w-100">
+                        Comment
+                    </button>
 
-@foreach($comments as $comment)
+                </form>
 
-    <p>
-        <strong>{{ $comment->user->name }}:</strong>
-        {{ $comment->comment }}
-    </p>
-    {{-- only current logged in user can edit or delete their own comment--}}
-    @if(auth()->id() == $comment->user_id) 
+            </div>
 
-        <a href="{{ route('comments.edit', $comment) }}"> 
+        </div>
 
-            Edit
-        </a>
+    @else
 
-        <form action="{{ route('comments.delete', $comment) }}" method="POST">
-            @csrf
-            @method('DELETE')
-
-            <button type="submit">
-                Delete
-            </button>
-        </form>
+        <div class="alert alert-info">
+            You already commented on this post.
+        </div>
 
     @endif
 
-    <hr>
+    <!-- Comments List -->
+    <h5 class="mb-3">Comments</h5>
 
-@endforeach
+    @foreach($comments as $comment)
 
+        <div class="card mb-3">
 
-@if($errors->any())
+            <div class="card-body">
 
-    @foreach($errors->all() as $error)
-        <p>{{ $error }}</p>
+                <div class="d-flex justify-content-between">
+
+                    <strong>{{ $comment->user->name }}</strong>
+
+                    @if(auth()->id() == $comment->user_id)
+
+                        <div class="d-flex gap-2">
+
+                            <a href="{{ route('comments.edit', $comment) }}"
+                               class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
+
+                            <form action="{{ route('comments.delete', $comment) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-sm btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+                    @endif
+
+                </div>
+
+                <p class="mt-2 mb-0">
+                    {{ $comment->comment }}
+                </p>
+
+            </div>
+
+        </div>
+
     @endforeach
 
-@endif
+    <!-- Errors -->
+    @if($errors->any())
+
+        <div class="alert alert-danger mt-3">
+
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+
+        </div>
+
+    @endif
+
+</div>

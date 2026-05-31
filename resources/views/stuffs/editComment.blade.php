@@ -1,18 +1,46 @@
-<h1>Edit Comment</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<form action="{{ route('comments.update', $comment) }}" method="POST">
+<div class="container mt-5">
 
-    @csrf
-    @method('PUT')
+    <div class="row justify-content-center">
 
-    <textarea name="comment">{{ $comment->comment }}</textarea>
+        <div class="col-md-6">
 
-    <br><br>
+            <div class="card shadow">
 
-    <button type="submit">
-        Update 
-    </button>
+                <div class="card-body">
 
-</form>
+                    <h4 class="text-center mb-4">Edit Comment</h4>
 
-<a href="{{ url()->previous() }}">Back</a>
+                    <form action="{{ route('comments.update', $comment) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label class="form-label">Comment</label>
+
+                            <textarea name="comment" class="form-control" rows="5">{{ $comment->comment }}
+                            </textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Update Comment
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary btn-sm">
+                            ← Back
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

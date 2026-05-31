@@ -1,31 +1,78 @@
-<h1>Edit Post</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<form action="{{ route('posts.update', $post) }}" method="POST">
+<div class="container mt-5">
 
-    @csrf
-    @method('PUT')
+    <div class="row justify-content-center">
 
-    <input 
-        type="text" 
-        name="title" 
-        value="{{ $post->title }}"
-    >
+        <div class="col-md-7">
 
-    <br><br>
+            <div class="card shadow">
 
-    <textarea name="content">{{ $post->content }}</textarea>
+                <div class="card-body">
 
-    <br><br>
+                    <h3 class="text-center mb-4">Edit Post</h3>
 
-    <button type="submit">Update Post</button>
+                    <form action="{{ route('posts.update', $post) }}" method="POST">
+                        @csrf
+                        @method('PUT')
 
-</form>
-    <a href="{{ route('posts.index') }}">Back</a>
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
 
-@if($errors->any())
+                            <input 
+                                type="text" 
+                                name="title" 
+                                class="form-control"
+                                value="{{ old('title', $post->title) }}"
+                            >
+                        </div>
 
-    @foreach($errors->all() as $error)
-        <p>{{ $error }}</p>
-    @endforeach
+                        <!-- Content -->
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
 
-@endif
+                            <textarea 
+                                name="content" 
+                                class="form-control" 
+                                rows="6"
+                            >{{ old('content', $post->content) }}</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Update Post
+                        </button>
+
+                    </form>
+
+                    <!-- Back Button -->
+                    <div class="text-center mt-3">
+                        <a href="{{ route('posts.index') }}" class="btn btn-secondary btn-sm">
+                            ← Back
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Validation Errors -->
+    @if($errors->any())
+
+        <div class="alert alert-danger mt-4">
+
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+
+        </div>
+
+    @endif
+
+</div>

@@ -5,17 +5,21 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 
-Route::get('/', function () {
-    return view('auth.register');
+Route::middleware('guest')->group(function () {
+
+    Route::get('/', function () {
+        return view('auth.register');
+    });
+
+    Route::get('/loginForm', function () {
+        return view('auth.login');
+    })->name('loginForm');
+
+    Route::post('/register',[AuthController::class,'register'])->name('register');
+
+    Route::post('/login',[AuthController::class,'login'])->name('login');
 });
 
-Route::get('/loginForm', function () {
-    return view('auth.login');
-})->name('loginForm');
-
-Route::post('/register',[AuthController::class,'register'])->name('register');
-
-Route::post('/login',[AuthController::class,'login'])->name('login');
 
 Route::middleware('auth')->group(function () {
 

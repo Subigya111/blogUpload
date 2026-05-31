@@ -1,30 +1,62 @@
-<h1>Create Post</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<form action="{{ route('posts.store') }}" method="POST">
+<div class="container mt-4">
 
-    @csrf
+    <div class="row justify-content-center">
 
-    <input type="text" name="title" placeholder="Enter Title">
+        <div class="col-md-6">
 
-    <br><br>
+            <div class="card shadow">
 
-    <textarea name="content" placeholder="Enter Content"></textarea>
+                <div class="card-body">
 
-    <br><br>
+                    <h3 class="text-center mb-4">Create Post</h3>
 
-    <button type="submit" name="submit">Save Post</button>
+                    <form action="{{ route('posts.store') }}" method="POST">
+                        @csrf
 
-</form>
-@include('auth.logout')
-@if(isset($POST['submit'])){
-@include('stuffs.comment')
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="Enter Title">
+                        </div>
 
-}
-@endif
-@if($errors->any())
+                        <!-- Content -->
+                        <div class="mb-3">
+                            <label class="form-label">Content</label>
+                            <textarea name="content" class="form-control" rows="5" placeholder="Enter Content"></textarea>
+                        </div>
 
-    @foreach($errors->all() as $error)
-        <p>{{ $error }}</p>
-    @endforeach
+                        <button type="submit" class="btn btn-success w-100">
+                            Save Post
+                        </button>
 
-@endif
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Logout -->
+    <div class="mt-3 text-center">
+        @include('auth.logout')
+    </div>
+
+    <!-- Validation Errors -->
+    @if($errors->any())
+        <div class="alert alert-danger mt-3">
+
+            <ul class="mb-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+
+        </div>
+    @endif
+
+</div>

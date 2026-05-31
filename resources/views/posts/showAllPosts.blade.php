@@ -1,29 +1,64 @@
-<h1>All Posts</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<a href="{{ route('posts.create') }}">Create Post</a>
+<div class="container mt-4">
 
-@if(session('success'))
-    <p>{{ session('success') }}</p>
-@endif
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>All Posts</h2>
 
-@foreach($posts as $post)
+        <a href="{{ route('posts.create') }}" class="btn btn-primary">
+            + Create Post
+        </a>
+    </div>
 
-    <h2>{{ $post->title }}</h2>
+    <!-- Success Message -->
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <p>{{ Str::limit($post->content, 100) }}</p>
+    <!-- Posts -->
+    @foreach($posts as $post)
 
-    <a href="{{ route('posts.show', $post) }}">View</a>
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
 
-    <a href="{{ route('posts.edit', $post) }}">Edit</a>
+                <h4 class="card-title">{{ $post->title }}</h4>
 
-    <form action="{{ route('posts.destroy', $post) }}" method="POST">
-        @csrf
-        @method('DELETE')
+                <p class="card-text text-muted">
+                    {{ Str::limit($post->content, 120) }}
+                </p>
 
-        <button type="submit">Delete</button>
-    </form>
-    @include('auth.logout')
+                <div class="d-flex gap-2">
 
-    <hr>
+                    <a href="{{ route('posts.show', $post) }}" class="btn btn-sm btn-info text-white">
+                        View
+                    </a>
 
-@endforeach
+                    <a href="{{ route('posts.edit', $post) }}" class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <button class="btn btn-sm btn-danger">
+                            Delete
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+    @endforeach
+
+    <!-- Logout (move OUTSIDE loop — important fix) -->
+    <div class="mt-4">
+        @include('auth.logout')
+    </div>
+
+</div>
